@@ -33,7 +33,6 @@ function SignUp() {
     gender: '3',
   });
   const { firstName, lastName, phone, email, password, confirmPassword, gender } = userData;
-  console.log(userData, 'hvjgvjvg')
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const navigate = useNavigate();
@@ -45,17 +44,53 @@ function SignUp() {
 
   const handleSignUp = () => {
     if (firstName === '') {
-      console.log('First Name is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'First Name is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else if (lastName === '') {
-      console.log('Last Name is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'Last Name is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else if (phone === '') {
-      console.log('Phone is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'Phone is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else if (email === '') {
-      console.log('Email is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'Email is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else if (password === '') {
-      console.log('Password is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'Password is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else if (confirmPassword === '') {
-      console.log('Confirm Password is required');
+      toast({
+        title: 'An error occurred.',
+        description: 'Confirm Password is required.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     } else {
       if (password !== confirmPassword) {
         toast({
@@ -82,7 +117,8 @@ function SignUp() {
               updateProfile(auth.currentUser, {
                 displayName: displayName,
                 email: auth.currentUser.email
-              })
+              },
+                console.log(user, "wkwkwkwwkwkwkwkw"))
               //create user in firestore(db)
               const userRef = doc(db, 'user', user.uid)
               setDoc(userRef, {

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import {
   Box,
   Button,
@@ -30,6 +31,7 @@ import { auth, db } from '../config/firebase';
 const FormToDo = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [todos, setTodos] = useState([])
+  const navigate = useNavigate()
   const [todoInput, setTodoInput] = useState({
     title: '',
     description: ''
@@ -51,7 +53,7 @@ const FormToDo = () => {
       status: "pending",
       uid: user.uid
     });
-      setTodoInput({
+    setTodoInput({
       title: '',
       description: ''
     })
@@ -65,16 +67,17 @@ const FormToDo = () => {
     try {
       const querySnapshot = await getDocs(q);
       const p = []
-      querySnapshot.forEach((doc) =>
-        p.push(doc.data())
-
-      )
+      querySnapshot.forEach((doc) => {
+        let newData = { id: doc.id }
+        newData = { ...newData, ...doc.data() }
+        // p.push(doc.data(), newData)
+        p.push(newData)
+      })
+      console.log(p, "wkwkwkwkw")
       setTodos(p)
-
     } catch (error) {
       console.log(error)
     }
-
   }
 
   // console.log(todos, 'ni todos');
@@ -94,8 +97,15 @@ const FormToDo = () => {
   }
 
   const handleEdit = (index) => {
-
-    console.log(index, "wkwkwkwkw")
+    const selectedTodo = todos[index];
+    navigate('/FormToDoEdit', {
+      state: {
+        id: selectedTodo.id,
+        title: selectedTodo.title,
+        description: selectedTodo.description,
+        status: selectedTodo.status
+      }
+    });
   }
 
   useEffect(() => {

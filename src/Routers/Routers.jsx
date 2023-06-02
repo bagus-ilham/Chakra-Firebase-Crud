@@ -6,6 +6,7 @@ import Lamp from "../Pages/Lamp"
 import Profile from '../Pages/Profile'
 import FormToDo from '../Pages/FormToDo'
 import Sidebar from '../Pages/Sidebar'
+import FormToDoEdit from '../Pages/FormToDoEdit'
 
 const Routers = () => {
   return (
@@ -37,9 +38,14 @@ const Routers = () => {
         element={<Sidebar />}
       />
 
-<Route
+      <Route
         path='/FormToDo'
         element={<FormToDo />}
+      />
+
+      <Route
+        path='/FormToDoEdit'
+        element={<FormToDoEdit />}
       />
     </Routes>
   )

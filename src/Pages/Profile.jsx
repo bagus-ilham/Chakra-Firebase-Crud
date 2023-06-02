@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Avatar, Heading, Text, Stack } from "@chakra-ui/react";
+import { Box, Avatar, Heading, Text, Stack, Spinner } from "@chakra-ui/react";
 import { useLocation } from "react-router-dom";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
@@ -9,9 +9,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 const Profile = () => {
   const [data, setData] = useState('')
   const [user, setUser] = useState({})
+  const [loading, setLoading] = useState(true)
   const auth = getAuth()
   //catch id from firestore(db)
-
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -28,6 +28,7 @@ const Profile = () => {
   //get data from firestore(db)
 
   const getData = async () => {
+    setLoading(true)
     console.log(userId, "useruid")
     const docRef = doc(db, "user", userId);
     const docSnap = await getDoc(docRef);
@@ -38,6 +39,7 @@ const Profile = () => {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
     }
+    setLoading(false)
   }
 
 
@@ -49,6 +51,7 @@ const Profile = () => {
 
   return (
     <Sidebar>
+
       <Box
         maxW="sm"
         borderWidth="1px"
@@ -56,8 +59,8 @@ const Profile = () => {
         overflow="hidden"
         p={6}
         boxShadow="md"
-      >
-        <Avatar size="xl" name={`${data.firstName} ${data.lastName}`} src="/path-to-avatar.jpg" />
+      >{loading ? <Spinner mx={3} /> : <Avatar size="xl" name={`${data.firstName} ${data.lastName}`} src="/path-to-avatar.jpg" />}
+
         <Heading mt={4} mb={2} size="lg">
           {displayName}
         </Heading>
